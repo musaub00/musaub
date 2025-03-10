@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void SetArray(int **Arr, int *n);
+int BinarySearchRecursive(int arr[], int x, int y, int find);
+int main() {
+    int n = 0, pos = -1, find = -1, *data ;
+    SetArray(&data, &n);
+    if (n > 0) {
+        printf("Find : ") ;
+        scanf("%d", &find) ;
+        pos = BinarySearchRecursive(data, 0, n - 1, find);
+        if (pos != -1)
+            printf("FOUND %d in POSITION = Arr[%d]\n", data[pos], pos);
+        else
+            printf("VALUE NOT FOUND\n");
+    }
+    return 0;
+}
+void SetArray(int **Arr, int *n) {
+    scanf( "%d" , n ) ;
+    
+    if ( *n <= 0 ) {
+        printf( "Error\n" ) ;
+        *n = 0;
+        return ;
+    }
+    
+    *Arr = ( int* ) malloc( *n * sizeof( int ) ) ;
+    if ( *Arr == NULL ) {
+        printf( "Error\n" ) ;
+        *n = 0; 
+        return ;
+    }
+    printf( "Enter %d sorted elements:\n" , *n ) ;
+    int i ;
+    for ( i = 0; i < *n; i++ ) {
+        scanf( "%d" , &( *Arr)[ i ] ) ;
+    }
+}
+void PrintArray( int arr[], int n ) {
+    printf( "Array elements: " ) ;
+    
+    int i ;
+    
+    for ( i = 0 ; i < n ; i++ ) {
+        printf( "%d " , arr[ i ] ) ;
+    }
+    printf( "\n" ) ;
+}
+int BinarySearchRecursive( int arr[] , int x , int y , int find ) {
+    if ( x > y ) {
+        return -1 ; 
+    }
+    
+    int z ;
+    z = ( x + y ) / 2 ;
+ 
+    if ( arr[z] == find ) {
+        return z ; 
+    }
+    
+    if ( find < arr[ z ] ) {
+        return BinarySearchRecursive( arr , x , z - 1 , find ) ;
+    }
+    
+    return BinarySearchRecursive( arr , z + 1 , y , find ) ;
+}
